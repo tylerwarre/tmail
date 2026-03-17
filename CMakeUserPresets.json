@@ -5,7 +5,8 @@
       "name": "default",
       "inherits": "vcpkg",
       "environment": {
-        "VCPKG_ROOT": "C:/Program Files/Microsoft Visual Studio/18/Professional/VC/vcpkg/"
+        "VCPKG_ROOT": "C:/Users/M83393/tools/vcpkg",
+        "VCPKG_MAX_CONCURRENCY": "8"
       }
     }
   ]

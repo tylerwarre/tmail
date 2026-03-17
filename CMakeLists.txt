@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.29.2)
 
+set(CMAKE_C_COMPILER cl)
+set(CMAKE_CXX_COMPILER cl)
+
 project(tmail)
 
 find_package(wolfssl CONFIG REQUIRED)
