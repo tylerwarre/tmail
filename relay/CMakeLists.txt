@@ -13,3 +13,11 @@ target_include_directories(tmail-relay PRIVATE ${WOLFSSL_INCLUDE_DIRS})
 target_link_libraries(tmail-relay PRIVATE ${WOLFSSL_LIBRARIES})
 ## WolfSSL requires winsock to be linked for static builds
 target_link_libraries(tmail-relay PRIVATE ws2_32)
+
+add_custom_command(
+    TARGET tmail-relay
+    POST_BUILD
+    COMMAND "${CMAKE_COMMAND}" -E copy_directory
+        "${CMAKE_SOURCE_DIR}/certs"
+        "${CMAKE_BINARY_DIR}/relay/Debug/certs"
+)

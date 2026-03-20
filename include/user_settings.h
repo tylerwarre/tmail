@@ -1,6 +1,9 @@
 #ifndef _WIN_USER_SETTINGS_H_
 #define _WIN_USER_SETTINGS_H_
 
+// Tmail settings
+#define WOLFSSL_TLS13
+
 /* For FIPS 140-2 3389 build set to "#if 1" */
 #if 0
 #undef HAVE_FIPS
