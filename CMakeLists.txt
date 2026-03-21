@@ -15,3 +15,4 @@ project(tmail)
 find_package(WolfSSL REQUIRED)
 
 add_subdirectory(relay)
+add_subdirectory(client)
