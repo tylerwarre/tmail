@@ -5,6 +5,7 @@ int main() {
     int result = 0;
     char errMsg[80];
     WOLFSSL_CTX *ctx;
+    SOCKET listenFd;
 
     result = wolfSSL_Init();
     if (result != WOLFSSL_SUCCESS) {
@@ -29,6 +30,14 @@ int main() {
         exit(result);
     }
 
+    // Load relay certificate
+    result = wolfSSL_CTX_use_certificate_file(ctx, "./certs/relay-cert.pem", SSL_FILETYPE_PEM);
+    if (result != WOLFSSL_SUCCESS) {
+        wolfSSL_ERR_error_string(result, errMsg);
+        frptinf(stderr, "Failed to load relay certificate: %s\n", errMsg);
+        exit(result);
+    }
+
     // Load relay private key
     result = wolfSSL_CTX_use_PrivateKey_file(ctx, "./certs/relay-key.pem", SSL_FILETYPE_PEM);
     if (result != WOLFSSL_SUCCESS) {
@@ -36,6 +45,14 @@ int main() {
         fprintf(stderr, "Failed to load relay private key: %s\n", errMsg);
         exit(result);
     }
+
+    // Setup a TCP socket file descriptor
+    // The third option can be set to "0" to let the protocol automatically be determined
+    listenFd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+    // Configure socket to allow address reuse
+    int opt = 1;
+    setsockopt(listenFd, SOL_SOCKET, SO_REUSEADDR, (const char *)&opt, sizeof(int));
 
     // Cleanup wolfSSL
     wolfSSL_CTX_free(ctx);
